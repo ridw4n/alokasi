@@ -22,6 +22,9 @@
                     <a href="<?php echo base_url();?>jadwal/opsi_sipil">Jadwal Jurusan Sipil</a>
                 </li>
                 <li>
+                    <a href="<?php echo base_url();?>jadwal_gen">Generator</a>
+                </li>
+                <li>
                     <a href="<?php echo base_url();?>jadwal/upload_jadwal">Upload Jadwal</a>
                 </li>
             </ul>

@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Jadwal extends CI_Controller{
-	public $globalcss;
-	public $globaljs;
+	public $modulcss;
+	public $moduljs;
 
 	function __construct(){
 		parent::__construct();
@@ -13,11 +13,11 @@ class Jadwal extends CI_Controller{
 		$this->load->model('Ruangan_model');
 		$this->load->model('Default_model');
 
-		$this->globalcss='
+		$this->modulcss='
 			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
             <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
             <link href="'.base_url().'assets/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">';
-        $this->globaljs='
+        $this->moduljs='
 	        <script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 	        <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
@@ -48,8 +48,8 @@ class Jadwal extends CI_Controller{
 				//reset filter pilihan
 				$this->session->unset_userdata('filter_jelektro');
 				$data['title_web']="Jadwal Kuliah Elektro- Manajemen Alokasi Ruangan";
-				$data['costum_css']=$this->globalcss;
-				$data['costum_js']=$this->globaljs;
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$data['prodi']=$this->Prodi_model->get_list_prodi('elektro');
 				$data['thnajaran']=$this->Jadwal_model->get_list_tahunajaran("elektro");
@@ -84,8 +84,8 @@ class Jadwal extends CI_Controller{
 				//reset filter pilihan
 				$this->session->unset_userdata('filter_jsipil');
 				$data['title_web']="Jadwal Kuliah Sipil- Manajemen Alokasi Ruangan";
-				$data['costum_css']=$this->globalcss;
-				$data['costum_js']=$this->globaljs;
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$data['prodi']=$this->Prodi_model->get_list_prodi('sipil');
 				$data['thnajaran']=$this->Jadwal_model->get_list_tahunajaran("sipil");
@@ -107,8 +107,8 @@ class Jadwal extends CI_Controller{
 		if($this->auth->is_login()){
 			//print_r($this->session->userdata('filter_jelektro'));
 			$data['title_web']="Jadwal Kuliah Jurusan Elektro - Manajemen Alokasi Ruangan";
-			$data['costum_css']=$this->globalcss;
-			$data['costum_js']=$this->globaljs;
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 		    $filter=$this->session->userdata('filter_jelektro');
 			$idprodi=$filter['prodi'];
@@ -136,8 +136,8 @@ class Jadwal extends CI_Controller{
 		if($this->auth->is_login()){
 			//print_r($this->session->userdata('filter_jelektro'));
 			$data['title_web']="Jadwal Kuliah Jurusan Sipil - Manajemen Alokasi Ruangan";
-			$data['costum_css']=$this->globalcss;
-			$data['costum_js']=$this->globaljs;
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 		    $filter=$this->session->userdata('filter_jsipil');
 			$idprodi=$filter['prodi'];
@@ -250,8 +250,8 @@ class Jadwal extends CI_Controller{
 	public function tambah_jelektro(){
 		if($this->auth->is_login()){
 			$data['title_web']="Tambah Jadwal - Manajemen Alokasi Ruangan";
-			$data['costum_css']=$this->globalcss;
-			$data['costum_js']=$this->globaljs;
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 		    $filter=$this->session->userdata('filter_jelektro');
 			$idprodi=$filter['prodi'];
@@ -272,8 +272,8 @@ class Jadwal extends CI_Controller{
 	public function tambah_jsipil(){
 		if($this->auth->is_login()){
 			$data['title_web']="Tambah Jadwal - Manajemen Alokasi Ruangan";
-			$data['costum_css']=$this->globalcss;
-			$data['costum_js']=$this->globaljs;
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 		    $filter=$this->session->userdata('filter_jsipil');
 			$idprodi=$filter['prodi'];
@@ -370,8 +370,8 @@ class Jadwal extends CI_Controller{
 		if($this->auth->is_login()){
 			if(ctype_digit($id)){
 				$data['title_web']="Edit Jadwal - Manajemen Alokasi Ruangan";
-				$data['costum_css']=$this->globalcss;
-				$data['costum_js']=$this->globaljs;
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$filter=$this->session->userdata('filter_jelektro');
 				$idprodi=$filter['prodi'];
@@ -394,8 +394,8 @@ class Jadwal extends CI_Controller{
 		if($this->auth->is_login()){
 			if(ctype_digit($id)){
 				$data['title_web']="Edit Jadwal - Manajemen Alokasi Ruangan";
-				$data['costum_css']=$this->globalcss;
-				$data['costum_js']=$this->globaljs;
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$filter=$this->session->userdata('filter_jsipil');
 				$idprodi=$filter['prodi'];

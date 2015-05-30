@@ -6,12 +6,13 @@ class Jadwal_model extends CI_Model{
 
 	function get_list_tahunajaran($jenis=null){
 		if($jenis="elektro"){
-			$query=$this->db->query("SELECT DISTINCT(tahun_ajaran) FROM ar_jadwal_elektro");
+			$idjur='2';
 		}else if($jenis="sipil"){
-			$query=$this->db->query("SELECT DISTINCT(tahun_ajaran) FROM ar_jadwal_sipil");
+			$idjur='1';
 		}else{
-			return FALSE;
+			$idjur='0';
 		}
+		$query=$this->db->query("SELECT DISTINCT(tahun_ajaran) FROM ar_jadwal WHERE id_jurusan='$idjur'");
 
 		if($query->num_rows()>0){
 			return $query->result_array();
@@ -22,12 +23,14 @@ class Jadwal_model extends CI_Model{
 
 	function get_list_kodesmt($jenis=null){
 		if($jenis="elektro"){
-			$query=$this->db->query("SELECT DISTINCT(kodesmt) FROM ar_jadwal_elektro");
+			$idjur='2';
 		}else if($jenis="sipil"){
-			$query=$this->db->query("SELECT DISTINCT(kodesmt) FROM ar_jadwal_sipil");
+			$idjur='1';
 		}else{
-			return FALSE;
+			$idjur='0';
 		}
+
+		$query=$this->db->query("SELECT DISTINCT(kodesmt) FROM ar_jadwal WHERE id_jurusan='$idjur'");
 
 		if($query->num_rows()>0){
 			return $query->result_array();
@@ -44,28 +47,21 @@ class Jadwal_model extends CI_Model{
 
 		if($jurusan!=null){
 			if($jurusan=='sipil'){
-				if($thn_ajaran!='all'){
-					$this->db->where('ar_jadwal_sipil.tahun_ajaran',$thn_ajaran);
-				}
-				$this->db->where('ar_jadwal_sipil.id_prodi',$prodi);
-				if($kodesmt!='all'){
-					$this->db->where('ar_jadwal_sipil.kodesmt',$kodesmt);
-				}
-				$this->db->select('ar_jadwal_sipil.*,ar_matakuliah.nama_mk');
-				$this->db->from('ar_jadwal_sipil');
-				$this->db->join('ar_matakuliah', 'ar_jadwal_sipil.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal_sipil.kodesmt = ar_matakuliah.kode_smt', 'left');
+				$idjurusan='1';
 			}else if($jurusan=='elektro'){
-				if($thn_ajaran!='all'){
-					$this->db->where('ar_jadwal_elektro.tahun_ajaran',$thn_ajaran);
-				}
-				$this->db->where('ar_jadwal_elektro.id_prodi',$prodi);
-				if($kodesmt!='all'){
-					$this->db->where('ar_jadwal_elektro.kodesmt',$kodesmt);
-				}
-				$this->db->select('ar_jadwal_elektro.*,ar_matakuliah.nama_mk');
-				$this->db->from('ar_jadwal_elektro');
-				$this->db->join('ar_matakuliah', 'ar_jadwal_elektro.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal_elektro.kodesmt = ar_matakuliah.kode_smt', 'left');
+				$idjurusan='2';
 			}
+			$this->db->where('ar_jadwal.id_jurusan',$idjurusan);
+			if($thn_ajaran!='all'){
+				$this->db->where('ar_jadwal.tahun_ajaran',$thn_ajaran);
+			}
+			$this->db->where('ar_jadwal.id_prodi',$prodi);
+			if($kodesmt!='all'){
+				$this->db->where('ar_jadwal.kodesmt',$kodesmt);
+			}
+			$this->db->select('ar_jadwal.*,ar_matakuliah.nama_mk');
+			$this->db->from('ar_jadwal');
+			$this->db->join('ar_matakuliah', 'ar_jadwal.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal.kodesmt = ar_matakuliah.kode_smt', 'left');
 		}
 		
 		$query = $this->db->get();
@@ -78,16 +74,16 @@ class Jadwal_model extends CI_Model{
 
 	function get_jadwal($id,$jurusan){
 		if($jurusan=='elektro'){
-			$this->db->select('ar_jadwal_elektro.*,ar_matakuliah.nama_mk');
-			$this->db->from('ar_jadwal_elektro');
-			$this->db->join('ar_matakuliah', 'ar_jadwal_elektro.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal_elektro.kodesmt = ar_matakuliah.kode_smt', 'left');
-			$this->db->where('id_jadwal',$id);
+			$idjurusan='2';
 		}else if($jurusan='sipil'){
-			$this->db->select('ar_jadwal_sipil.*,ar_matakuliah.nama_mk');
-			$this->db->from('ar_jadwal_sipil');
-			$this->db->join('ar_matakuliah', 'ar_jadwal_sipil.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal_sipil.kodesmt = ar_matakuliah.kode_smt', 'left');
-			$this->db->where('id_jadwal',$id);
+			$idjurusan='1';
 		}
+		$this->db->select('ar_jadwal.*,ar_matakuliah.nama_mk');
+		$this->db->from('ar_jadwal');
+		$this->db->join('ar_matakuliah', 'ar_jadwal.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal.kodesmt = ar_matakuliah.kode_smt', 'left');
+		$this->db->where('id_jadwal',$id);
+		$this->db->where('id_jurusan',$idjurusan);
+
 		$query = $this->db->get();
 		if($query->num_rows()>0){
 			return $query->row_array();
@@ -98,30 +94,35 @@ class Jadwal_model extends CI_Model{
 
 	function simpan_jadwal($data,$jurusan){
 		if($jurusan=='elektro'){
-			$query=$this->db->insert('ar_jadwal_elektro',$data);
+			$idjurusan='2';
 		}else if($jurusan=='sipil'){
-			$query=$this->db->insert('ar_jadwal_sipil',$data);
+			$idjurusan='1';
 		}
+		$data['id_jurusan']=$idjurusan;
+		$query=$this->db->insert('ar_jadwal',$data);
 		return $query;
 	}
 
 	function update_jadwal($id,$data,$jurusan){
 		$this->db->where('id_jadwal',$id);
 		if($jurusan=='elektro'){
-			$query=$this->db->update('ar_jadwal_elektro',$data);
+			$idjurusan='2';
 		}else if($jurusan=='sipil'){
-			$query=$this->db->update('ar_jadwal_sipil',$data);
+			$idjurusan='1';
 		}
+		$query=$this->db->update('ar_jadwal',$data);
 		return $query;
 	}
 
 	function hapus($id,$jurusan){
 		$this->db->where('id_jadwal',$id);
 		if($jurusan=='elektro'){
-			$query=$this->db->delete('ar_jadwal_elektro');
+			$idjurusan='2';
 		}else if($jurusan=='sipil'){
-			$query=$this->db->delete('ar_jadwal_sipil');
+			$idjurusan='1';
 		}
+		$this->db->where('id_jurusan',$idjurusan);
+		$query=$this->db->delete('ar_jadwal');
 
 		return $query;
 	}

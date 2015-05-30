@@ -1,10 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Operator extends CI_Controller {
+	public $modulcss;
+	public $moduljs;
 	function __construct(){
 		parent::__construct();
 
 		$this->load->model('Operator_model');
+
+		$this->modulcss='
+			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+	        <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">';
+        $this->moduljs='
+	        <script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
+            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
+            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
+		    <script src="'.base_url().'assets/js/operator.js"></script>';
 	}
 
 	public function index(){
@@ -66,18 +79,8 @@ class Operator extends CI_Controller {
 	public function listop(){
 		if($this->auth->is_login()){
 			$data['title_web']="Daftar Operator - Manajemen Alokasi Ruangan";
-			$data['costum_css']='
-			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-			';
-			$data['costum_js']='
-			<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-		    <script src="'.base_url().'assets/js/operator.js"></script>
-			';
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 			$data['menu']="menu_kiri";
 			$data['konten']="pages/operator/daftaroperator";
@@ -147,18 +150,9 @@ class Operator extends CI_Controller {
 	public function tambah(){
 		if($this->auth->is_login()){
 			$data['title_web']="Tambah Operator Baru - Manajemen Alokasi Ruangan";
-			$data['costum_css']='
-			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-			';
-			$data['costum_js']='
-			<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-		    <script src="'.base_url().'assets/js/operator.js"></script>
-			';
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
+
 			$data['menu']="menu_kiri";
 			$data['konten']="pages/operator/tambah";
 
@@ -211,18 +205,8 @@ class Operator extends CI_Controller {
 			if(ctype_digit($id)){
 				$data['profil']=$this->Operator_model->get_profil($id);
 				$data['title_web']="Edit Operator Baru - Manajemen Alokasi Ruangan";
-				$data['costum_css']='
-				<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-	            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-				';
-				$data['costum_js']='
-				<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-				<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-	            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-	            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-			    <script src="'.base_url().'assets/js/operator.js"></script>
-				';
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$data['menu']="menu_kiri";
 				$data['konten']="pages/operator/edit";
@@ -319,13 +303,8 @@ class Operator extends CI_Controller {
 			$userid=$this->session->userdata('userid');
 			$data['profil']=$this->Operator_model->get_profil($userid);
 			$data['title_web']="Profil Operator - Manajemen Alokasi Ruangan";
-			$data['costum_css']='';
-			$data['costum_js']='
-			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-		    <script src="'.base_url().'assets/js/operator.js"></script>
-			';
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 			$data['menu']="menu_kiri";
 			$data['konten']="pages/operator/profilop";

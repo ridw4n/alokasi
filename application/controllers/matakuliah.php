@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Matakuliah extends CI_Controller{
+	public $modulcss;
+	public $moduljs;
 	function __construct(){
 		parent::__construct();
 
@@ -9,6 +11,17 @@ class Matakuliah extends CI_Controller{
 
 		$this->load->library('PHPExcel');
 		//$this->load->library('PHPExcel/PHPExcel_IOFactory');
+
+		$this->modulcss='
+			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+	        <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">';
+        $this->moduljs='
+	        <script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
+            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
+            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
+		    <script src="'.base_url().'assets/js/matakuliah.js"></script>';
 	}
 
 	public function index(){
@@ -35,17 +48,8 @@ class Matakuliah extends CI_Controller{
 				//reset filter pilihan
 				$this->session->unset_userdata('filtermk');
 				$data['title_web']="Daftar Mata Kuliah - Manajemen Alokasi Ruangan";
-				$data['costum_css']='
-				<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-	            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-				';
-				$data['costum_js']='
-				<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-				<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-	            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-	            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-			    <script src="'.base_url().'assets/js/matakuliah.js"></script>';
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$data['prodi']=$this->Prodi_model->get_list_prodi();
 				$data['thnajaran']=$this->Matakuliah_model->get_list_tahunajaran();
@@ -64,17 +68,8 @@ class Matakuliah extends CI_Controller{
 		if($this->auth->is_login()){
 			if($this->session->userdata('filtermk')){
 				$data['title_web']="Daftar Mata Kuliah - Manajemen Alokasi Ruangan";
-				$data['costum_css']='
-				<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-	            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-				';
-				$data['costum_js']='
-				<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-				<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-	            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-	            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-			    <script src="'.base_url().'assets/js/matakuliah.js"></script>';
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 			    $filter=$this->session->userdata('filtermk');
 				$idprodi=$filter['prodi'];
@@ -148,17 +143,8 @@ class Matakuliah extends CI_Controller{
 			//reset filter pilihan
 			$this->session->unset_userdata('filtermk');
 			$data['title_web']="Upload Mata Kuliah - Manajemen Alokasi Ruangan";
-			$data['costum_css']='
-			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-			';
-			$data['costum_js']='
-			<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-			<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-		    <script src="'.base_url().'assets/js/matakuliah.js"></script>';
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
 
 			$data['prodi']=$this->Prodi_model->get_list_prodi();
 
@@ -182,17 +168,8 @@ class Matakuliah extends CI_Controller{
 		if($this->auth->is_login()){
 			if($this->session->userdata('filtermk')){
 				$data['title_web']="Tambah Data Mata Kuliah - Manajemen Alokasi Ruangan";
-				$data['costum_css']='
-				<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-	            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-				';
-				$data['costum_js']='
-				<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-				<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-	            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-	            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-			    <script src="'.base_url().'assets/js/matakuliah.js"></script>';
+				$data['costum_css']=$this->modulcss;
+				$data['costum_js']=$this->moduljs;
 
 				$data['menu']="menu_kiri";
 				$data['konten']="pages/matakuliah/tambah";
@@ -255,18 +232,8 @@ class Matakuliah extends CI_Controller{
 				if(ctype_digit($id)){
 					$data['mk']=$this->Matakuliah_model->get_mk($id);
 					$data['title_web']="Edit Data Mata Kuliah - Manajemen Alokasi Ruangan";
-					$data['costum_css']='
-					<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-		            <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-					';
-					$data['costum_js']='
-					<script src="'.base_url().'assets/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-		            <script src="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-					<script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/jquery.validate.js"></script>
-		            <script type="text/javascript" src="'.base_url().'assets/bower_components/jqueryvalidation/localization/messages_id.min.js"></script>
-		            <script src="'.base_url().'assets/dist/js/sb-admin-2.js"></script>
-				    <script src="'.base_url().'assets/js/matakuliah.js"></script>
-					';
+					$data['costum_css']=$this->modulcss;
+					$data['costum_js']=$this->moduljs;
 
 					$data['menu']="menu_kiri";
 					$data['konten']="pages/matakuliah/edit";
