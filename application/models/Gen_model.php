@@ -6,7 +6,7 @@ class Gen_model extends CI_Model{
 	/**
 	mengambil data mk jurusan elektro yg belum dapat ruangan
 	*/
-	function get_mk($data){
+	function get_mk($data,$returnjlh=null){
 		$prodi=$data['prodi'];
 		$idjurusan='2';
 
@@ -16,7 +16,11 @@ class Gen_model extends CI_Model{
 
 		$query=$this->db->get('ar_jadwal');
 		if($query->num_rows()>0){
-			return $query->result_array();
+			if($returnjlh!=""){
+				return $query->num_rows();
+			}else{
+				return $query->result_array();
+			}
 		}else{
 			return FALSE;
 		}
