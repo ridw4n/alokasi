@@ -31,7 +31,8 @@ class Gen_model extends CI_Model{
 	parameter : kapasitas
 	*/
 	function get_ruangan($kapasitas){
-		$this->db->where('kapasitas >',($kapasitas-1));
+		$this->db->where('kapasitas >=',($kapasitas));
+		//$this->db->order_by('kapasitas','ASC');
 		$query=$this->db->get('ar_ruangan');
 		if($query->num_rows()>0){
 			return $query->result_array();
@@ -54,7 +55,7 @@ class Gen_model extends CI_Model{
 		$wktselesai=$params['wkt_selesai'];
 		$tgl=$params['tgl'];
 		$ruangan=$params['ruangan'];
-		$sql="SELECT * FROM `ar_jadwal` WHERE ((jam_mulai > '".$wktmulai."' AND jam_mulai<'".$wktselesai."') OR (jam_selesai > '".$wktmulai."' AND jam_selesai < '".$wktselesai."')) AND ruangan = '".$ruangan."' AND tanggal = '".$tgl."'";
+		$sql="SELECT * FROM `ar_jadwal` WHERE ((jam_mulai >= '".$wktmulai."' AND jam_mulai <='".$wktselesai."') OR (jam_selesai >= '".$wktmulai."' AND jam_selesai <= '".$wktselesai."')) AND ruangan = '".$ruangan."' AND tanggal = '".$tgl."'";
 		$query=$this->db->query($sql);
 		if($query->num_rows()=='0'){
 			return $ruangan;

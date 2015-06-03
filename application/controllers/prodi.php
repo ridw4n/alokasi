@@ -59,11 +59,18 @@ class Prodi extends CI_Controller{
 				  </ul>
 				</div>';
 
-				$prodi=array(
-			        $data['nama_jurusan'],
-			        $data['nama_prodi'],
-			        $aksi
-			    );
+			    if($this->auth->is_admin()){
+			    	$prodi=array(
+				        $data['nama_jurusan'],
+				        $data['nama_prodi'],
+				        $aksi
+				    );
+			    }else{
+			    	$prodi=array(
+				        $data['nama_jurusan'],
+				        $data['nama_prodi']
+				    );
+			    }
 			    array_push($dataprodi, $prodi);
 			}
 			echo json_encode(array("data"=>$dataprodi));

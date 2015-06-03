@@ -183,19 +183,33 @@ class Jadwal extends CI_Controller{
 				    </li>         
 				  </ul>
 				</div>';
-
-				$listjadwal=array(
-			        $jdwl['hari'],
-			        tanggalIndo($jdwl['tanggal'], 'j F Y'),
-			        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
-			        $jdwl['kodesmt'],
-			        $jdwl['nama_mk'],
-			        $jdwl['kelas'],
-			        $jdwl['dosen_pengajar'],
-			        $jdwl['ruangan'],
-			        $jdwl['tahun_ajaran'],
-			        $aksi
-			    );
+				if($this->auth->is_admin()){
+					$listjadwal=array(
+				        $jdwl['hari'],
+				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
+				        $jdwl['kodesmt'],
+				        $jdwl['nama_mk'],
+				        $jdwl['kelas'],
+				        $jdwl['dosen_pengajar'],
+				        $jdwl['ruangan'],
+				        $jdwl['tahun_ajaran'],
+				        $aksi
+				    );
+				}else{
+					$listjadwal=array(
+				        $jdwl['hari'],
+				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
+				        $jdwl['kodesmt'],
+				        $jdwl['nama_mk'],
+				        $jdwl['kelas'],
+				        $jdwl['dosen_pengajar'],
+				        $jdwl['ruangan'],
+				        $jdwl['tahun_ajaran']
+				    );
+				}
+				
 			    array_push($datajadwal, $listjadwal);
 			}
 			echo json_encode(array("data"=>$datajadwal));
@@ -227,18 +241,32 @@ class Jadwal extends CI_Controller{
 				  </ul>
 				</div>';
 
-				$listjadwal=array(
-			        $jdwl['hari'],
-			        tanggalIndo($jdwl['tanggal'], 'j F Y'),
-			        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
-			        $jdwl['kodesmt'],
-			        $jdwl['nama_mk'],
-			        $jdwl['kelas'],
-			        $jdwl['dosen_pengajar'],
-			        $jdwl['ruangan'],
-			        $jdwl['tahun_ajaran'],
-			        $aksi
-			    );
+			    if($this->auth->is_admin()){
+					$listjadwal=array(
+				        $jdwl['hari'],
+				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
+				        $jdwl['kodesmt'],
+				        $jdwl['nama_mk'],
+				        $jdwl['kelas'],
+				        $jdwl['dosen_pengajar'],
+				        $jdwl['ruangan'],
+				        $jdwl['tahun_ajaran'],
+				        $aksi
+				    );
+				}else{
+					$listjadwal=array(
+				        $jdwl['hari'],
+				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
+				        $jdwl['kodesmt'],
+				        $jdwl['nama_mk'],
+				        $jdwl['kelas'],
+				        $jdwl['dosen_pengajar'],
+				        $jdwl['ruangan'],
+				        $jdwl['tahun_ajaran']
+				    );
+				}
 			    array_push($datajadwal, $listjadwal);
 			}
 			echo json_encode(array("data"=>$datajadwal));

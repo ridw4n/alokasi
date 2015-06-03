@@ -59,12 +59,19 @@ class Ruangan extends CI_Controller {
 				    </li>         
 				  </ul>
 				</div>';
-
-				$operator=array(
-			        $data['nama_ruangan'],
-			        $data['kapasitas'],
-			        $aksi
-			    );
+				if($this->auth->is_admin()){
+					$operator=array(
+				        $data['nama_ruangan'],
+				        $data['kapasitas'],
+				        $aksi
+				    );
+				}else{
+					$operator=array(
+				        $data['nama_ruangan'],
+				        $data['kapasitas']
+				    );
+				}
+				
 			    array_push($dataruangan, $operator);
 			}
 			echo json_encode(array("data"=>$dataruangan));

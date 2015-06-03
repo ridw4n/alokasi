@@ -5,7 +5,9 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
+		<?php if($this->auth->is_admin()){ ?>
 		<a href="<?php echo site_url();?>jadwal/tambah_jelektro" class="btn btn-primary" style="margin-bottom:5px;">Tambah Data</a>
+		<?php } ?>
 		<a href="<?php echo site_url();?>jadwal/opsi_elektro" class="btn btn-default" style="margin-bottom:5px;">Kembali</a>
 		<table class="table table-bordered table-hover table-striped" id="jadwalelektro">
 			<thead>
@@ -19,7 +21,9 @@
 					<th style="text-align:center">Dosen Pengajar </th>
 					<th style="text-align:center">Ruangan </th>
 					<th style="text-align:center">Thn Ajaran</th>
-					<th style="text-align:center">Aksi</th>
+					<?php if($this->auth->is_admin()){ ?>
+					<td style="text-align:center">Aksi</td>
+					<?php } ?>
 				</tr>
 			</thead>
 		</table>

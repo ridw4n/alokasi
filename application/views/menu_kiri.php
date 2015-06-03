@@ -21,12 +21,14 @@
                 <li>
                     <a href="<?php echo base_url();?>jadwal/opsi_sipil">Jadwal Jurusan Sipil</a>
                 </li>
+                <?php if($this->auth->is_admin()){?>
                 <li>
                     <a href="<?php echo base_url();?>jadwal_gen">Generator</a>
                 </li>
                 <li>
                     <a href="<?php echo base_url();?>jadwal/upload_jadwal">Upload Jadwal</a>
                 </li>
+                <?php } ?>
             </ul>
             <!-- /.nav-second-level -->
         </li>
@@ -36,9 +38,11 @@
                 <li>
                     <a href="<?php echo base_url();?>matakuliah/opsi">Daftar Mata Kuliah</a>
                 </li>
+                <?php if($this->auth->is_admin()){?>
                 <li>
                     <a href="<?php echo base_url();?>matakuliah/upload_mk">Upload Mata Kuliah</a>
                 </li>
+                <?php } ?>
             </ul>
             <!-- /.nav-second-level -->
         </li>
@@ -48,15 +52,19 @@
                 <li>
                     <a href="<?php echo base_url();?>operator/profil">Profil</a>
                 </li>
+                <?php if($this->auth->is_admin()){?>
                 <li>
                     <a href="<?php echo base_url();?>operator/listop">Manajemen Operator</a>
                 </li>
+                <?php } ?>
             </ul>
             <!-- /.nav-second-level -->
         </li>
+        <?php if($this->auth->is_admin()){?>
         <li>
             <a href="<?php echo base_url();?>pengaturan"><i class="fa fa-gear fa-fw"></i> Pengaturan</a>
         </li>
+        <?php } ?>
         <li>
             <a href="#" onClick="logout()"><i class="fa fa-power-off fa-fw"></i> Logout</a>
         </li>
