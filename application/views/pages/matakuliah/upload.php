@@ -5,7 +5,7 @@
 </div>
 <div class"row">
 	<div class="col-md-12">
-		<form class="form-horizontal" id="uploadmk" id="uploadmk" method="post">
+		<form class="form-horizontal" id="uploadmk" id="uploadmk" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label class="control-label col-md-3">Prodi</label>
 				<div class="col-md-4">

@@ -66,12 +66,16 @@ $(document).ready(function() {
             $(element).parent().removeClass('has-error');
         },
   		submitHandler: function(form) {
+  			var formData = new FormData(document.getElementById("uploadmk"));
   			$.ajax({
 				url:base_url+'matakuliah/act_upload',
+				type:'POST',
+				data:formData,
 				dataType:'json',
-				type:'post',
-				cache:false,
-				data:$("#uploadmk").serialize(),
+				mimeType:'multipart/form-data',
+				contentType: false,
+		    	cache: false,
+				processData:false,
 				beforeSend:function(){
 				},
 				success:function(json){	

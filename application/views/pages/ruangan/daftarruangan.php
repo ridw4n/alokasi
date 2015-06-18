@@ -13,6 +13,7 @@
 				<tr>
 					<td style="text-align:center">Nama Ruangan</td>
 					<td style="text-align:center">Kapasitas</td>
+					<td style="text-align:center">Prodi</td>
 					<?php if($this->auth->is_admin()){ ?>
 					<td style="text-align:center">Aksi</td>
 					<?php } ?>

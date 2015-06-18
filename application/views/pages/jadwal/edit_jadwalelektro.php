@@ -89,6 +89,21 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="control-label col-md-3">Prioritas</label>
+				<div class="col-md-4">
+					<?php
+					if($jadwal['prioritas']=="lab"){
+						$dbprioritas="lab";
+					}else{
+						$dbprioritas="all";
+					}
+					$optprioritas=array(""=>"Pilih Prioritas Ruangan",'all'=>"Semua Ruangan",'lab'=>"LAB");
+					$js='id="prioritas" class="form-control"';
+					echo form_dropdown('prioritas', $optprioritas, $dbprioritas, $js);
+					?>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="control-label col-md-3">Kode SMT</label>
 				<div class="col-md-2">
 					<input type="text" name="kode_smt" id="kode_smt" class="form-control" value="<?php echo $jadwal['kodesmt'];?>" />

@@ -18,6 +18,12 @@
 					<input type="text" name="thnajaranaktif" class="form-control" id="thnajaranaktif" value="<?php echo $thnajaranaktif;?>" placeholder="cth:2014/2015">
 				</div>
 			</div>
+			<!-- <div class="form-group">
+				<label class="control-label col-md-3">Kurikulum Mata Kuliah Aktif</label>
+				<div class="col-md-4">
+					<input type="text" name="kuraktif" class="form-control" id="kuraktif" value="<?php echo $kuraktif;?>" placeholder="cth:2014/2015">
+				</div>
+			</div> -->
 			<div class="form-group">
 				<label class="control-label col-md-3"></label>
 				<div class="col-md-4">

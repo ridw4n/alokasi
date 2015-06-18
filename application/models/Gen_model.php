@@ -8,7 +8,7 @@ class Gen_model extends CI_Model{
 	*/
 	function get_mk($data,$returnjlh=null){
 		$prodi=$data['prodi'];
-		$idjurusan='2';
+		$idjurusan='2'; // jurusan elektro
 
 		$this->db->where('id_prodi',$prodi);
 		$this->db->where('id_jurusan',$idjurusan);
@@ -30,9 +30,14 @@ class Gen_model extends CI_Model{
 	get ruangan yang sesuai kapasitas ruangan dari jadwal yg tidak ada ruangan
 	parameter : kapasitas
 	*/
-	function get_ruangan($kapasitas){
+	function get_ruangan($kapasitas,$prodi,$mklab=null){
 		$this->db->where('kapasitas >=',($kapasitas));
-		//$this->db->order_by('kapasitas','ASC');
+		$this->db->where_in('id_prodi',array('0',$prodi));
+		if($mklab!=null){
+			$this->db->order_by('id_prodi','DESC');
+		}
+		$this->db->order_by('kapasitas','ASC');
+		$this->db->order_by('nama_ruangan','ASC');
 		$query=$this->db->get('ar_ruangan');
 		if($query->num_rows()>0){
 			return $query->result_array();

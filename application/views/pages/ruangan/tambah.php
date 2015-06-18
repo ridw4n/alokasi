@@ -20,6 +20,21 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="control-label col-md-3">Prodi</label>
+        <div class="col-md-4">
+          <?php
+          $optprodi=array(""=>"Pilih Prodi","0"=>"Semua Prodi");
+          if($prodi!=FALSE){
+            foreach($prodi as $ta){
+              $optprodi[$ta['id_prodi']]=$ta['nama_prodi'];
+            }
+          }
+          $js='id="prodi" class="form-control"';
+          echo form_dropdown('prodi', $optprodi, '', $js);
+          ?>
+        </div>
+      </div>
+      <div class="form-group">
         <label class="control-label col-md-3"></label>
         <div class="col-md-5">
           <button type="submit" name="btn-tambah" id="btn-tambah" class="btn btn-primary">Tambah Ruangan</button>

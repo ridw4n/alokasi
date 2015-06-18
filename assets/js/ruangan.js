@@ -6,6 +6,9 @@ $(document).ready(function() {
 			nama_ruangan:{
 				required:true
 			},
+			prodi:{
+				required:true
+			},
 			kapasitas:{
 				required:true,
 				digits:true,

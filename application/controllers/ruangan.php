@@ -59,16 +59,22 @@ class Ruangan extends CI_Controller {
 				    </li>         
 				  </ul>
 				</div>';
+				$prodi="Semua Prodi";
+				if($data['nama_prodi']!=""){
+					$prodi=$data['nama_prodi'];
+				}
 				if($this->auth->is_admin()){
 					$operator=array(
 				        $data['nama_ruangan'],
 				        $data['kapasitas'],
+				        $prodi,
 				        $aksi
 				    );
 				}else{
 					$operator=array(
 				        $data['nama_ruangan'],
-				        $data['kapasitas']
+				        $data['kapasitas'],
+				        $prodi
 				    );
 				}
 				
@@ -86,6 +92,9 @@ class Ruangan extends CI_Controller {
 			$data['costum_css']=$this->modulcss;
 			$data['costum_js']=$this->moduljs;
 
+			$this->load->model('Prodi_model');
+			$data['prodi']=$this->Prodi_model->get_list_prodi();
+
 			$data['menu']="menu_kiri";
 			$data['konten']="pages/ruangan/tambah";
 			$this->load->view('template',$data);
@@ -102,9 +111,11 @@ class Ruangan extends CI_Controller {
 
 			$nama_ruangan=$this->input->post('nama_ruangan');
 			$kapasitas=$this->input->post('kapasitas');
+			$prodi=$this->input->post('prodi');
 			$data=array(
 				"nama_ruangan"=>$nama_ruangan,
-				"kapasitas"=>$kapasitas
+				"kapasitas"=>$kapasitas,
+				"id_prodi"=>$prodi
 			);
 
 			if($this->form_validation->run()==TRUE){
@@ -127,6 +138,9 @@ class Ruangan extends CI_Controller {
 				$data['costum_css']=$this->modulcss;
 				$data['costum_js']=$this->moduljs;
 
+				$this->load->model('Prodi_model');
+				$data['prodi']=$this->Prodi_model->get_list_prodi();
+
 				$data['menu']="menu_kiri";
 				$data['konten']="pages/ruangan/edit";
 				$this->load->view('template',$data);
@@ -146,9 +160,11 @@ class Ruangan extends CI_Controller {
 
 				$nama_ruangan=$this->input->post('nama_ruangan');
 				$kapasitas=$this->input->post('kapasitas');
+				$prodi=$this->input->post('prodi');
 				$data=array(
 					"nama_ruangan"=>$nama_ruangan,
-					"kapasitas"=>$kapasitas
+					"kapasitas"=>$kapasitas,
+					"id_prodi"=>$prodi
 				);
 
 				if($this->form_validation->run()==TRUE){

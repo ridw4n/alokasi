@@ -88,13 +88,23 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="control-label col-md-3">Prioritas</label>
+				<div class="col-md-4">
+					<?php
+					$optprioritas=array(""=>"Pilih Prioritas Ruangan",'all'=>"Semua Ruangan",'lab'=>"LAB");
+					$js='id="prioritas" class="form-control"';
+					echo form_dropdown('prioritas', $optprioritas, '', $js);
+					?>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="control-label col-md-3">Kode SMT</label>
 				<div class="col-md-2">
 					<input type="text" name="kode_smt" id="kode_smt" class="form-control" value="<?php echo $kodesmt_aktif['setting_value'];?>" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-3">Thn_ajaran</label>
+				<label class="control-label col-md-3">Thn Ajaran</label>
 				<div class="col-md-2">
 					<input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control" value="<?php echo $thnajaran_aktif['setting_value'];?>"/>
 				</div>

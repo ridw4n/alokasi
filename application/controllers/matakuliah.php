@@ -9,9 +9,6 @@ class Matakuliah extends CI_Controller{
 		$this->load->model('Matakuliah_model');
 		$this->load->model('Prodi_model');
 
-		$this->load->library('PHPExcel');
-		//$this->load->library('PHPExcel/PHPExcel_IOFactory');
-
 		$this->modulcss='
 			<link href="'.base_url().'assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 	        <link href="'.base_url().'assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">';
@@ -159,6 +156,18 @@ class Matakuliah extends CI_Controller{
 
 	public function act_upload(){
 		if($this->auth->is_login()){
+			$prodi=$this->input->post('prodi');
+			$config['upload_path'] = './tmp/';
+			$config['allowed_types'] = 'xls|xlsx';
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('berkas')) {
+				echo json_encode(array("success"=>false,"msg"=>"Aksi Gagal. Error: ".$this->upload->display_errors()));
+				exit();
+			}else{
+				$datafile=$this->upload->data();
+				$nmfile=$datafile['file_name'];
+				echo $nmfile;
+			}
 		}else{
 			//redirect('dashboard/login');
 		}
@@ -309,8 +318,10 @@ class Matakuliah extends CI_Controller{
 		}
 	}
 
-	public function format_download(){ 		
- 		$objPHPExcel = PHPExcel_IOFactory::load("excel/ar_matakuliah.xlsx");
+	public function format_download(){ 
+		$this->load->library('excel');
+
+ 		/*$objPHPExcel = PHPExcel_IOFactory::load("tmp/ar_matakuliah.xlsx");
  		$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 		echo '<pre>';
 		print_r($sheetData);
@@ -320,6 +331,39 @@ class Matakuliah extends CI_Controller{
 				echo $r;
 			}
 			echo '<br/>';
-		}		 
+		}*/	
+		$inputFileName="tmp/ar_matakuliah.xlsx";
+		$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+		echo 'File ',pathinfo($inputFileName,PATHINFO_BASENAME),' has been identified as an ',$inputFileType,' file<br />';
+
+		echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with the identified reader type<br />';
+		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+		$objPHPExcel = $objReader->load($inputFileName);
+
+		$objWorksheet = $objPHPExcel->getActiveSheet();
+		$highestRow = $objWorksheet->getHighestRow(); 
+		$highestColumn = $objWorksheet->getHighestColumn(); 
+
+		$sheetData = $objPHPExcel->getActiveSheet()->rangeToArray('A2:F5');
+		echo '<hr />';
+		echo 'highest row : '.$highestRow;
+		echo '| highest coloumn : '.$highestColumn;
+		echo '<pre>';
+
+		print_r($sheetData);
+
+		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
+
+		echo '<table border="1">' . "\n";
+		for ($row = 1; $row <= $highestRow; ++$row) {
+		  	echo '<tr>' . "\n";
+
+		  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
+		    	echo '<td>' . $objWorksheet->getCellByColumnAndRow($col, $row)->getValue() . '</td>' . "\n";
+		  	}
+
+		  	echo '</tr>' . "\n";
+		}
+		echo '</table>' . "\n";	 
 	}
 }

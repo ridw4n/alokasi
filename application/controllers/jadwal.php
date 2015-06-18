@@ -191,6 +191,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
 				        $jdwl['kelas'],
+				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
 				        $jdwl['tahun_ajaran'],
@@ -204,6 +205,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
 				        $jdwl['kelas'],
+				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
 				        $jdwl['tahun_ajaran']
@@ -249,6 +251,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
 				        $jdwl['kelas'],
+				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
 				        $jdwl['tahun_ajaran'],
@@ -262,6 +265,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
 				        $jdwl['kelas'],
+				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
 				        $jdwl['tahun_ajaran']
@@ -521,6 +525,10 @@ class Jadwal extends CI_Controller{
 	}
 
 	public function get_detail_mk(){
+		
+	}
+
+	public function upload_jadwal(){
 		
 	}
 }

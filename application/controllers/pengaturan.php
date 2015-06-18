@@ -11,9 +11,11 @@ Class Pengaturan extends CI_Controller{
 
 			$smtaktif=$this->Default_model->get_semesteraktif();
 			$thnajaranaktif=$this->Default_model->get_thnajaranaktif();
+			$kurikulumaktif=$this->Default_model->get_kurikulumaktif();
 
 			$data['smtaktif']=$smtaktif['setting_value'];
 			$data['thnajaranaktif']=$thnajaranaktif['setting_value'];
+			$data['kuraktif']=$kurikulumaktif['setting_value'];
 			$data['title_web']="Pengaturan - Manajemen Alokasi Ruangan";
 			$data['costum_css']='
 			
@@ -40,11 +42,14 @@ Class Pengaturan extends CI_Controller{
 
 		$this->form_validation->set_rules('smtaktif', 'Semester Aktif', 'required|xss_clean');
 		$this->form_validation->set_rules('thnajaranaktif', 'Tahun Ajaran Aktif', 'required|xss_clean');
+		//$this->form_validation->set_rules('kuraktif', 'Kurikulum Mata Kuliah Aktif', 'required|xss_clean');
 
 		if($this->form_validation->run()==TRUE){
 			$smtaktif=$this->input->post('smtaktif');
 			$thnajaran=$this->input->post('thnajaranaktif');
+			//$kuraktif=$this->input->post('kuraktif');
 
+			/*if($this->Default_model->set_semesteraktif(array("setting_value"=>$smtaktif)) AND $this->Default_model->set_thnajaranaktif(array("setting_value"=>$thnajaran)) AND $this->Default_model->set_kuraktif(array("setting_value"=>$kuraktif))){*/
 			if($this->Default_model->set_semesteraktif(array("setting_value"=>$smtaktif)) AND $this->Default_model->set_thnajaranaktif(array("setting_value"=>$thnajaran))){
 				echo json_encode(array("success"=>true,"msg"=>"Pengaturan Berhasil Disimpan"));
 			}

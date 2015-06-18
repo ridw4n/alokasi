@@ -29,6 +29,8 @@ class Jadwal_gen extends CI_Controller{
 	function prodi(){
 		if($_POST){
 			$data['prodi']=$this->input->post('prodi');
+			$idprodi=$this->input->post('prodi');
+			//query ambil daftar matakuliah dalam jadwal yg belum mendapat ruangan (JURUSAN elektro)
 			$q1=$this->Gen_model->get_mk($data);	
 			foreach ($q1 as $row1) {
 				$kapasitas=$row1['jlh_mhs'];
@@ -36,8 +38,15 @@ class Jadwal_gen extends CI_Controller{
 				$jamselesai=$row1['jam_selesai'];
 				$tanggal=$row1['tanggal'];
 				$idjadwal=$row1['id_jadwal'];
+				$pruangan=$row1['prioritas'];
 				$selectedruangan="";
-				$q2=$this->Gen_model->get_ruangan($kapasitas);
+				if($pruangan=='lab'){
+					$prioritas=$pruangan;
+				}else{
+					$prioritas="";
+				}
+				//query mengambil data ruangan dengan kapasitas yg sama atau lebih besar dari kapasitas di jadwal
+				$q2=$this->Gen_model->get_ruangan($kapasitas,$idprodi,$prioritas);
 				foreach ($q2 as $row2) {
 					if($selectedruangan==""){
 						$data['wkt_mulai']=$jammulai;
@@ -66,6 +75,7 @@ class Jadwal_gen extends CI_Controller{
 	function check_jlh_jadwal(){
 		$idprodi=$this->input->post('idprodi');
 		$data['prodi']=$idprodi;
+		//mendapatkan jumlah mata kuliah dalam jadwal yang belum memiliki ruangan
 		$jlh=$this->Gen_model->get_mk($data,"returnjlh");
 		if($jlh==0){
 			echo json_encode(array(

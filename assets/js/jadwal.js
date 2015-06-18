@@ -160,6 +160,9 @@ $(document).ready(function() {
 			},
 			tahun_ajaran:{
 				required:true
+			},
+			prioritas:{
+				required:true
 			}
 		},
 		errorPlacement: function (error, element) {
@@ -240,6 +243,9 @@ $(document).ready(function() {
 				required:true
 			},
 			tahun_ajaran:{
+				required:true
+			},
+			prioritas:{
 				required:true
 			}
 		},

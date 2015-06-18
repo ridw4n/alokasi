@@ -6,7 +6,10 @@ class Ruangan_model extends CI_Model{
 	}
 
 	function get_daftar_ruangan(){
-		$query=$this->db->get('ar_ruangan');
+		$this->db->select('ar_ruangan.*,ar_prodi.nama_prodi');
+		$this->db->from('ar_ruangan');
+		$this->db->join('ar_prodi','ar_prodi.id_prodi=ar_ruangan.id_prodi','left');
+		$query=$this->db->get();
 		if($query->num_rows()>0){
 			return $query->result_array();
 		}else{

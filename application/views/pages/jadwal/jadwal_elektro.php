@@ -18,6 +18,7 @@
 					<th style="text-align:center">Kode SMT</th>
 					<th style="text-align:center">Mata Kuliah</th>
 					<th style="text-align:center">Kelas</th>
+					<th style="text-align:center">Jlh Mhs</th>
 					<th style="text-align:center">Dosen Pengajar </th>
 					<th style="text-align:center">Ruangan </th>
 					<th style="text-align:center">Thn Ajaran</th>
