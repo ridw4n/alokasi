@@ -66,25 +66,43 @@ $(document).ready(function() {
             $(element).parent().removeClass('has-error');
         },
   		submitHandler: function(form) {
-  			var formData = new FormData(document.getElementById("uploadmk"));
-  			$.ajax({
-				url:base_url+'matakuliah/act_upload',
-				type:'POST',
-				data:formData,
-				dataType:'json',
-				mimeType:'multipart/form-data',
-				contentType: false,
-		    	cache: false,
-				processData:false,
-				beforeSend:function(){
-				},
-				success:function(json){	
-					if(json.success){
-						location.href=base_url+"matakuliah/daftar_mk";
+	  		if(window.FormData !== undefined){  // for HTML5 browsers	
+	  			var formData = new FormData(document.getElementById("uploadmk"));
+	  			$.ajax({
+					url:base_url+'matakuliah/act_upload',
+					type:'POST',
+					data:formData,
+					dataType:'html',
+					mimeType:'multipart/form-data',
+					contentType: false,
+			    	cache: false,
+					processData:false,
+					beforeSend:function(){
+					},
+					success:function(html){	
+						/*if(json.success){
+							location.href=base_url+"matakuliah/daftar_mk";
+						}*/
+						$("#tabelpreviewupload").show();
+						$("#tbpreview").html(html);
+						$("#btntblaction").show();
+						$("#btn-tampilkan").prop('disable', 'true');
 					}
-				}
-			});
-    		return false;
+				});
+			}else{  //for olden browsers
+				
+				var  iframeId = "unique" + (new Date().getTime());
+				var iframe = $('<iframe src="javascript:false;" name="'+iframeId+'" />');
+				iframe.hide();
+				form.attr("target",iframeId);
+				iframe.appendTo("body");
+				iframe.load(function(e){
+					var doc = getDoc(iframe[0]);
+					var docRoot = doc.body ? doc.body : doc.documentElement;
+					var data = docRoot.innerHTML;
+				});
+			}
+    		//return false;
   		}
 	});
 
@@ -244,6 +262,40 @@ $(document).ready(function() {
 				"sLast":     "Terakhir"
 			}
         }
+	});
+
+	$("#simpandata").click(function() {
+		$.ajax({
+			url:base_url+'matakuliah/act_simpantabel',
+			dataType:'json',
+			type:'post',
+			cache:false,
+			beforeSend:function(){
+			},
+			success:function(json){	
+				if(json.success){
+					location.href=base_url+"matakuliah/opsi";
+				}
+			}
+		});
+		return false;
+	});
+
+	$("#reset").click(function() {
+		$.ajax({
+			url:base_url+'matakuliah/resetform',
+			dataType:'json',
+			type:'post',
+			cache:false,
+			beforeSend:function(){
+			},
+			success:function(json){	
+				if(json.success){
+					location.reload();
+				}
+			}
+		});
+		return false;
 	});
 });
 

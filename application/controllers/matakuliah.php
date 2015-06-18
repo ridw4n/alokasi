@@ -139,6 +139,8 @@ class Matakuliah extends CI_Controller{
 		if($this->auth->is_login()){
 			//reset filter pilihan
 			$this->session->unset_userdata('filtermk');
+			$this->session->unset_userdata('uploadedfile');
+			$this->session->unset_userdata('uploadmkprodi');
 			$data['title_web']="Upload Mata Kuliah - Manajemen Alokasi Ruangan";
 			$data['costum_css']=$this->modulcss;
 			$data['costum_js']=$this->moduljs;
@@ -156,6 +158,7 @@ class Matakuliah extends CI_Controller{
 
 	public function act_upload(){
 		if($this->auth->is_login()){
+			$this->load->library('excel');
 			$prodi=$this->input->post('prodi');
 			$config['upload_path'] = './tmp/';
 			$config['allowed_types'] = 'xls|xlsx';
@@ -166,10 +169,85 @@ class Matakuliah extends CI_Controller{
 			}else{
 				$datafile=$this->upload->data();
 				$nmfile=$datafile['file_name'];
-				echo $nmfile;
+				$this->session->set_userdata('uploadedfile', $nmfile);
+				$this->session->set_userdata('uploadmkprodi', $prodi);
+				$inputFileName="tmp/".$nmfile;
+				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+				
+				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+				$objPHPExcel = $objReader->load($inputFileName);
+
+				$objWorksheet = $objPHPExcel->getActiveSheet();
+				$highestRow = $objWorksheet->getHighestRow(); 
+				$highestColumn = $objWorksheet->getHighestColumn(); 
+
+				$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
+
+				//echo '<table class="table">' . "\n";
+				for ($row = 3; $row <= $highestRow; ++$row) {
+				  	echo '<tr>' . "\n";
+
+				  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
+				    	echo '<td>' . $objWorksheet->getCellByColumnAndRow($col, $row)->getValue() . '</td>' . "\n";
+				  	}
+
+				  	echo '</tr>' . "\n";
+				}
+				//echo '</table>' . "\n";
 			}
 		}else{
 			//redirect('dashboard/login');
+		}
+	}
+
+	public function act_simpantabel(){
+		$this->load->library('excel');
+		$nmfile=$this->session->userdata('uploadedfile');
+		$prodi=$this->session->userdata('uploadmkprodi');
+		$inputFileName="tmp/".$nmfile;
+		$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+		
+		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+		$objPHPExcel = $objReader->load($inputFileName);
+
+		$objWorksheet = $objPHPExcel->getActiveSheet();
+		$highestRow = $objWorksheet->getHighestRow(); 
+		$highestColumn = $objWorksheet->getHighestColumn(); 
+
+		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
+
+		//echo '<table class="table">' . "\n";
+		for ($row = 3; $row <= $highestRow; ++$row) {
+			$arraytbl=array(
+				"kode_mk",
+				"nama_mk",
+				"kode_smt",
+				"tahun_ajaran",
+				"sks",
+				"smt_mk");
+			$data=array();
+			$data['id_prodi']=$prodi;
+		  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
+		    	$data[$arraytbl[$col]]=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
+		  	}
+			$this->Matakuliah_model->tambah_mk($data);
+		}
+		echo json_encode(array("success"=>true));
+		if($nmfile!=""){
+			if(file_exists("./tmp/".$nmfile)){
+				@unlink("./tmp/".$nmfile);
+			}
+		}
+	}
+
+	public function resetform(){
+		$this->load->helper('file');
+		$nmfile=$this->session->userdata('uploadedfile');
+		if($nmfile!=""){
+			if(file_exists("./tmp/".$nmfile)){
+				@unlink("./tmp/".$nmfile);
+				echo json_encode(array("success"=>TRUE));
+			}
 		}
 	}
 
@@ -334,28 +412,28 @@ class Matakuliah extends CI_Controller{
 		}*/	
 		$inputFileName="tmp/ar_matakuliah.xlsx";
 		$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-		echo 'File ',pathinfo($inputFileName,PATHINFO_BASENAME),' has been identified as an ',$inputFileType,' file<br />';
+		/*echo 'File ',pathinfo($inputFileName,PATHINFO_BASENAME),' has been identified as an ',$inputFileType,' file<br />';
 
 		echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with the identified reader type<br />';
-		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+		*/$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 		$objPHPExcel = $objReader->load($inputFileName);
 
 		$objWorksheet = $objPHPExcel->getActiveSheet();
 		$highestRow = $objWorksheet->getHighestRow(); 
 		$highestColumn = $objWorksheet->getHighestColumn(); 
 
-		$sheetData = $objPHPExcel->getActiveSheet()->rangeToArray('A2:F5');
+		/*$sheetData = $objPHPExcel->getActiveSheet()->rangeToArray('A2:F5');
 		echo '<hr />';
 		echo 'highest row : '.$highestRow;
 		echo '| highest coloumn : '.$highestColumn;
 		echo '<pre>';
 
-		print_r($sheetData);
+		print_r($sheetData);*/
 
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
 
 		echo '<table border="1">' . "\n";
-		for ($row = 1; $row <= $highestRow; ++$row) {
+		for ($row = 3; $row <= $highestRow; ++$row) {
 		  	echo '<tr>' . "\n";
 
 		  	for ($col = 0; $col < $highestColumnIndex; ++$col) {

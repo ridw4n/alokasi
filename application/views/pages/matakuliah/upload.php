@@ -42,3 +42,23 @@
 		</form>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table" id="tabelpreviewupload" style="display:none">
+			<thead>
+				<th>Kode MK</th>
+				<th>Nama MK</th>
+				<th>Kode SMT</th>
+				<th>Tahun Ajaran</th>
+				<th>SKS</th>
+				<th>SMT MK</th>
+			</thead>
+			<tbody id="tbpreview">
+			</tbody>
+		</table>
+		<div id="btntblaction" style="display:none">
+			<a href="#" id="simpandata" name="simpandata" class="btn btn-primary">Simpan</a>
+			<a href="#" id="reset" name="reset" class="btn btn-default">Reset</a>
+		</div>
+	</div>
+</div>
