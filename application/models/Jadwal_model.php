@@ -97,6 +97,8 @@ class Jadwal_model extends CI_Model{
 			$idjurusan='2';
 		}else if($jurusan=='sipil'){
 			$idjurusan='1';
+		}else{
+			$idjurusan=$jurusan;
 		}
 		$data['id_jurusan']=$idjurusan;
 		$query=$this->db->insert('ar_jadwal',$data);

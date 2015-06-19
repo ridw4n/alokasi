@@ -86,7 +86,7 @@ $(document).ready(function() {
 						$("#tabelpreviewupload").show();
 						$("#tbpreview").html(html);
 						$("#btntblaction").show();
-						$("#btn-tampilkan").prop('disable', 'true');
+						$("#btn-tampilkan").prop('disable', true);
 					}
 				});
 			}else{  //for olden browsers

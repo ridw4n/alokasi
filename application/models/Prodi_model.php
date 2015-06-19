@@ -64,4 +64,17 @@ class Prodi_model extends CI_Model{
 		$query=$this->db->delete('ar_prodi');
 		return $query;
 	}
+
+	function idjurusan_fromprodi($idprodi){
+		$this->db->select('ar_prodi.id_jurusan');
+		$this->db->from('ar_prodi');
+		$this->db->where('id_prodi',$idprodi);
+		$query=$this->db->get();
+		if($query->num_rows()>0){
+			$r=$query->row_array();
+			return $r['id_jurusan'];
+		}else{
+			return 0;
+		}
+	}
 }

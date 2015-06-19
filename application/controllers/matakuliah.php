@@ -397,51 +397,10 @@ class Matakuliah extends CI_Controller{
 	}
 
 	public function format_download(){ 
-		$this->load->library('excel');
+		$this->load->helper('download');
+		$data = file_get_contents("./tmp/ar_matakuliah.xlsx");
+		$name = 'format_upload_matakuliah.xlsx';
 
- 		/*$objPHPExcel = PHPExcel_IOFactory::load("tmp/ar_matakuliah.xlsx");
- 		$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-		echo '<pre>';
-		print_r($sheetData);
-		for($x=1;$x<=count($sheetData);$x++){
-			//echo $sheetData[$x]; 
-			foreach($sheetData[$x] as $r){
-				echo $r;
-			}
-			echo '<br/>';
-		}*/	
-		$inputFileName="tmp/ar_matakuliah.xlsx";
-		$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-		/*echo 'File ',pathinfo($inputFileName,PATHINFO_BASENAME),' has been identified as an ',$inputFileType,' file<br />';
-
-		echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with the identified reader type<br />';
-		*/$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-		$objPHPExcel = $objReader->load($inputFileName);
-
-		$objWorksheet = $objPHPExcel->getActiveSheet();
-		$highestRow = $objWorksheet->getHighestRow(); 
-		$highestColumn = $objWorksheet->getHighestColumn(); 
-
-		/*$sheetData = $objPHPExcel->getActiveSheet()->rangeToArray('A2:F5');
-		echo '<hr />';
-		echo 'highest row : '.$highestRow;
-		echo '| highest coloumn : '.$highestColumn;
-		echo '<pre>';
-
-		print_r($sheetData);*/
-
-		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
-
-		echo '<table border="1">' . "\n";
-		for ($row = 3; $row <= $highestRow; ++$row) {
-		  	echo '<tr>' . "\n";
-
-		  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
-		    	echo '<td>' . $objWorksheet->getCellByColumnAndRow($col, $row)->getValue() . '</td>' . "\n";
-		  	}
-
-		  	echo '</tr>' . "\n";
-		}
-		echo '</table>' . "\n";	 
+		force_download($name, $data);
 	}
 }

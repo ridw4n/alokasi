@@ -529,6 +529,133 @@ class Jadwal extends CI_Controller{
 	}
 
 	public function upload_jadwal(){
+		if($this->auth->is_login()){
+			//reset filter pilihan
+			$this->session->unset_userdata('upjadfile');
+			$this->session->unset_userdata('upjadprodi');
+			$data['title_web']="Upload Jadwal Kuliah - Manajemen Alokasi Ruangan";
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
+
+			$data['prodi']=$this->Prodi_model->get_list_prodi();
+
+			$data['menu']="menu_kiri";
+			$data['konten']="pages/jadwal/form_upload";
+
+			$this->load->view('template',$data);
+		}else{
+			redirect('dashboard/login');
+		}
+	}
+
+	public function act_upload(){
+		if($this->auth->is_login()){
+			$this->load->library('excel');
+			$prodi=$this->input->post('prodi');
+			$config['upload_path'] = './tmp/';
+			$config['allowed_types'] = 'xls|xlsx';
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('berkas')) {
+				echo json_encode(array("success"=>false,"msg"=>"Aksi Gagal. Error: ".$this->upload->display_errors()));
+				exit();
+			}else{
+				$datafile=$this->upload->data();
+				$nmfile=$datafile['file_name'];
+				$this->session->set_userdata('upjadfile', $nmfile);
+				$this->session->set_userdata('upjadprodi', $prodi);
+				$inputFileName="tmp/".$nmfile;
+				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+				
+				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+				$objPHPExcel = $objReader->load($inputFileName);
+
+				$objWorksheet = $objPHPExcel->getActiveSheet();
+				$highestRow = $objWorksheet->getHighestRow(); 
+				$highestColumn = $objWorksheet->getHighestColumn(); 
+
+				$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
+
+				//echo '<table class="table">' . "\n";
+				for ($row = 10; $row <= $highestRow; ++$row) {
+				  	echo '<tr>' . "\n";
+
+				  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
+				    	echo '<td>' . $objWorksheet->getCellByColumnAndRow($col, $row)->getFormattedValue() . '</td>' . "\n";
+				  	}
+
+				  	echo '</tr>' . "\n";
+				}
+				//echo '</table>' . "\n";
+			}
+		}else{
+			//redirect('dashboard/login');
+		}
+	}
+
+	public function act_simpantabel(){
+		$this->load->library('excel');
+		$nmfile=$this->session->userdata('upjadfile');
+		$prodi=$this->session->userdata('upjadprodi');
+		$jurusan=$this->Prodi_model->idjurusan_fromprodi($prodi);
+
+		$inputFileName="tmp/".$nmfile;
+		$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
 		
+		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+		$objPHPExcel = $objReader->load($inputFileName);
+
+		$objWorksheet = $objPHPExcel->getActiveSheet();
+		$highestRow = $objWorksheet->getHighestRow(); 
+		$highestColumn = $objWorksheet->getHighestColumn(); 
+
+		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); 
+
+		//echo '<table class="table">' . "\n";
+		for ($row = 10; $row <= $highestRow; ++$row) {
+			$arraytbl=array(
+				"kode_mk",
+				"hari",
+				"tanggal",
+				"jam_mulai",
+				"jam_selesai",
+				"kelas",
+				"dosen_pengajar",
+				"jlh_mhs",
+				"ruangan",
+				"kodesmt",
+				"tahun_ajaran",
+				"prioritas");
+			$data=array();
+			$data['id_prodi']=$prodi;
+		  	for ($col = 0; $col < $highestColumnIndex; ++$col) {
+		    	$data[$arraytbl[$col]]=$objWorksheet->getCellByColumnAndRow($col, $row)->getFormattedValue();
+		  	}
+			$this->Jadwal_model->simpan_jadwal($data,$jurusan);
+		}
+		echo json_encode(array("success"=>true));
+		if($nmfile!=""){
+			if(file_exists("./tmp/".$nmfile)){
+				@unlink("./tmp/".$nmfile);
+			}
+		}
+	}
+
+	public function resetform(){
+		$this->load->helper('file');
+		$nmfile=$this->session->userdata('upjadfile');
+		if($nmfile!=""){
+			if(file_exists("./tmp/".$nmfile)){
+				@unlink("./tmp/".$nmfile);
+				echo json_encode(array("success"=>TRUE));
+			}
+		}
+	}
+
+	public function format_download(){ 
+		$this->load->helper('download');
+		$data = file_get_contents("./tmp/ar_jadwal.xlsx");
+		$name = 'format_upload_jadwal.xlsx';
+
+		force_download($name, $data);
 	}
 }
