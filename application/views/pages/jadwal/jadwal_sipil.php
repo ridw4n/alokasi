@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<?php if($this->auth->is_admin()){ ?> 
-		<a href="<?php echo site_url();?>jadwal/tambah_jsipil" class="btn btn-primary" style="margin-bottom:5px;">Tambah Data</a>
+		<!-- <a href="<?php echo site_url();?>jadwal/tambah_jsipil" class="btn btn-primary" style="margin-bottom:5px;">Tambah Data</a> -->
 		<?php } ?>
 		<a href="<?php echo site_url();?>jadwal/opsi_sipil" class="btn btn-default" style="margin-bottom:5px;">Kembali</a>
 		<table class="table table-bordered table-hover table-striped" id="jadwalsipil">

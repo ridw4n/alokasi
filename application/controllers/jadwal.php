@@ -226,7 +226,7 @@ class Jadwal extends CI_Controller{
 		$datajadwal=array();
 		if($getdata){
 			foreach($getdata as $jdwl){
-				$aksi='<div class="btn-group">
+				/*$aksi='<div class="btn-group">
 				  <a class=" btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
 				    <i class="fa fa-gear"></i> <span class="caret"></span>
 				  </a>
@@ -235,6 +235,18 @@ class Jadwal extends CI_Controller{
 				      <a role="menuitem" tabindex="-1" href="'.site_url().'jadwal/edit_jsipil/'.$jdwl['id_jadwal'].'"> Edit
 				      </a>
 				    </li> 
+				    <li role="presentation">
+				      <a role="menuitem" tabindex="-1" href="#" onClick="hapus_jadwal_s(\''.$jdwl['id_jadwal'].'\')">
+				        Hapus
+				      </a>
+				    </li>         
+				  </ul>
+				</div>';*/
+				$aksi='<div class="btn-group">
+				  <a class=" btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
+				    <i class="fa fa-gear"></i> <span class="caret"></span>
+				  </a>
+				  <ul role="menu" class="dropdown-menu pull-right">   
 				    <li role="presentation">
 				      <a role="menuitem" tabindex="-1" href="#" onClick="hapus_jadwal_s(\''.$jdwl['id_jadwal'].'\')">
 				        Hapus
