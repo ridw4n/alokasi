@@ -15,7 +15,9 @@
 					<th style="text-align:center">Semester</th>
 					<th style="text-align:center">Periode</th>
 					<th style="text-align:center">Thn Ajaran</th>
-					<th style="text-align:center">Aksi</th>
+					<?php if($this->auth->is_admin()){ ?>
+					<td style="text-align:center">Aksi</td>
+					<?php } ?>
 				</tr>
 			</thead>
 		</table>

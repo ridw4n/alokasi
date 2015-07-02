@@ -117,16 +117,27 @@ class Matakuliah extends CI_Controller{
 				    </li>         
 				  </ul>
 				</div>';
-
-				$listmk=array(
-			        $mk['kode_mk'],
-			        $mk['nama_mk'],
-			        $mk['sks'],
-			        $mk['smt_mk'],
-			        $mk['kode_smt'],
-			        $mk['tahun_ajaran'],
-			        $aksi
-			    );
+				if($this->auth->is_admin()){
+					$listmk=array(
+				        $mk['kode_mk'],
+				        $mk['nama_mk'],
+				        $mk['sks'],
+				        $mk['smt_mk'],
+				        $mk['kode_smt'],
+				        $mk['tahun_ajaran'],
+				        $aksi
+				    );
+				}else{
+					$listmk=array(
+				        $mk['kode_mk'],
+				        $mk['nama_mk'],
+				        $mk['sks'],
+				        $mk['smt_mk'],
+				        $mk['kode_smt'],
+				        $mk['tahun_ajaran']
+				    );
+				}
+				
 			    array_push($datamk, $listmk);
 			}
 			echo json_encode(array("data"=>$datamk));

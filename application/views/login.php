@@ -33,8 +33,11 @@
 
     <div class="container">
         <div class="row">
+
+            <h4 class="text-center"><img class="img" src="<?php echo site_url();?>assets/untan.png" style="width:100px" />
+                <br><br>Sistem Informasi Manajemen Alokasi Ruangan</h4 class="text-center">
             <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-default" style="margin-top:2%">
                     <div class="panel-heading">
                         <h3 class="panel-title">Silakan Masukkan Username & Password Anda</h3>
                     </div>
@@ -52,6 +55,7 @@
                         </form>
                     </div>
                 </div>
+                <small>Fakultas Teknik Universitas Tanjungpura</small>
             </div>
         </div>
     </div>
