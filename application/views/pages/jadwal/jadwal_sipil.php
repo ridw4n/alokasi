@@ -13,7 +13,7 @@
 			<thead>
 				<tr>
 					<th style="text-align:center">Hari</th>
-					<th style="text-align:center">Tanggal</th>
+					<!-- <th style="text-align:center">Tanggal</th> -->
 					<th style="text-align:center">Waktu</th>
 					<th style="text-align:center">Kode SMT</th>
 					<th style="text-align:center">Mata Kuliah</th>

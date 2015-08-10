@@ -186,7 +186,7 @@ class Jadwal extends CI_Controller{
 				if($this->auth->is_admin()){
 					$listjadwal=array(
 				        $jdwl['hari'],
-				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        /*tanggalIndo($jdwl['tanggal'], 'j F Y'),*/
 				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
@@ -200,7 +200,7 @@ class Jadwal extends CI_Controller{
 				}else{
 					$listjadwal=array(
 				        $jdwl['hari'],
-				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        /*tanggalIndo($jdwl['tanggal'], 'j F Y'),*/
 				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
@@ -258,7 +258,7 @@ class Jadwal extends CI_Controller{
 			    if($this->auth->is_admin()){
 					$listjadwal=array(
 				        $jdwl['hari'],
-				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        /*tanggalIndo($jdwl['tanggal'], 'j F Y'),*/
 				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
@@ -272,7 +272,7 @@ class Jadwal extends CI_Controller{
 				}else{
 					$listjadwal=array(
 				        $jdwl['hari'],
-				        tanggalIndo($jdwl['tanggal'], 'j F Y'),
+				        /*tanggalIndo($jdwl['tanggal'], 'j F Y'),*/
 				        $jdwl['jam_mulai']."-".$jdwl['jam_selesai'],
 				        $jdwl['kodesmt'],
 				        $jdwl['nama_mk'],
@@ -340,7 +340,7 @@ class Jadwal extends CI_Controller{
 			$this->form_validation->set_message('required','%s Tidak boleh kosong');
 
 			$this->form_validation->set_rules('hari','Hari','required');
-			$this->form_validation->set_rules('tanggal','Tanggal Jadwal','required');
+			/*$this->form_validation->set_rules('tanggal','Tanggal Jadwal','required');*/
 			$this->form_validation->set_rules('wkt_mulai','Waktu Mulai','required');
 			$this->form_validation->set_rules('wkt_selesai','Waktu Selesai','required');
 			$this->form_validation->set_rules('kodemk','Kode Mata Kuliah','required');
@@ -358,8 +358,8 @@ class Jadwal extends CI_Controller{
 				$filter=$this->session->userdata('filter_jsipil');
 			}
 			$idprodi=$filter['prodi'];
-			$hari=$this->input->post('hari');
-			$tanggal=$this->input->post('tanggal');
+			$hari=strtoupper($this->input->post('hari'));
+			/*$tanggal=$this->input->post('tanggal');*/
 			$wkt_mulai=$this->input->post('wkt_mulai');
 			$wkt_selesai=$this->input->post('wkt_selesai');
 			$kodemk=$this->input->post('kodemk');
@@ -376,7 +376,7 @@ class Jadwal extends CI_Controller{
 					"id_prodi"=>$idprodi,
 					"kode_mk"=>$kodemk,
 					"hari"=>$hari,
-					"tanggal"=>$tanggal,
+					/*"tanggal"=>$tanggal,*/
 					"jam_mulai"=>$wkt_mulai,
 					"jam_selesai"=>$wkt_selesai,
 					"kelas"=>$kelas,
@@ -463,7 +463,7 @@ class Jadwal extends CI_Controller{
 			$this->form_validation->set_message('required','%s Tidak boleh kosong');
 
 			$this->form_validation->set_rules('hari','Hari','required');
-			$this->form_validation->set_rules('tanggal','Tanggal Jadwal','required');
+			/*$this->form_validation->set_rules('tanggal','Tanggal Jadwal','required');*/
 			$this->form_validation->set_rules('wkt_mulai','Waktu Mulai','required');
 			$this->form_validation->set_rules('wkt_selesai','Waktu Selesai','required');
 			$this->form_validation->set_rules('kodemk','Kode Mata Kuliah','required');
@@ -481,8 +481,8 @@ class Jadwal extends CI_Controller{
 			}
 			$idjadwal=base64_decode($this->input->post('idjadwal'));
 			$idprodi=$filter['prodi'];
-			$hari=$this->input->post('hari');
-			$tanggal=$this->input->post('tanggal');
+			$hari=strtoupper($this->input->post('hari'));
+			/*$tanggal=$this->input->post('tanggal');*/
 			$wkt_mulai=$this->input->post('wkt_mulai');
 			$wkt_selesai=$this->input->post('wkt_selesai');
 			$kodemk=$this->input->post('kodemk');
@@ -499,7 +499,7 @@ class Jadwal extends CI_Controller{
 					"id_prodi"=>$idprodi,
 					"kode_mk"=>$kodemk,
 					"hari"=>$hari,
-					"tanggal"=>$tanggal,
+					/*"tanggal"=>$tanggal,*/
 					"jam_mulai"=>$wkt_mulai,
 					"jam_selesai"=>$wkt_selesai,
 					"kelas"=>$kelas,
@@ -627,7 +627,7 @@ class Jadwal extends CI_Controller{
 			$arraytbl=array(
 				"kode_mk",
 				"hari",
-				"tanggal",
+				/*"tanggal",*/
 				"jam_mulai",
 				"jam_selesai",
 				"kelas",

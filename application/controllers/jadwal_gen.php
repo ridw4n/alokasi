@@ -36,7 +36,7 @@ class Jadwal_gen extends CI_Controller{
 				$kapasitas=$row1['jlh_mhs'];
 				$jammulai=$row1['jam_mulai'];
 				$jamselesai=$row1['jam_selesai'];
-				$tanggal=$row1['tanggal'];
+				$hari=$row1['hari'];
 				$idjadwal=$row1['id_jadwal'];
 				$pruangan=$row1['prioritas'];
 				$selectedruangan="";
@@ -51,7 +51,7 @@ class Jadwal_gen extends CI_Controller{
 					if($selectedruangan==""){
 						$data['wkt_mulai']=$jammulai;
 						$data['wkt_selesai']=$jamselesai;
-						$data['tgl']=$tanggal;
+						$data['hari']=$hari;
 						$data['ruangan']=$row2['nama_ruangan'];
 						$q3=$this->Gen_model->get_ruangan_tersedia($data);
 						if($q3){

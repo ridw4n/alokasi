@@ -48,7 +48,7 @@
 			<thead>
 				<th>Kode MK</th>
 				<th>Hari</th>
-				<th>Tanggal</th>
+				<!-- <th>Tanggal</th> -->
 				<th>Waktu Mulai</th>
 				<th>Waktu Selesai</th>
 				<th>Kelas</th>

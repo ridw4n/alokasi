@@ -13,6 +13,7 @@ class Gen_model extends CI_Model{
 		$this->db->where('id_prodi',$prodi);
 		$this->db->where('id_jurusan',$idjurusan);
 		$this->db->where('ruangan','');
+		$this->db->order_by('jlh_mhs','DESC');
 
 		$query=$this->db->get('ar_jadwal');
 		if($query->num_rows()>0){
@@ -51,16 +52,16 @@ class Gen_model extends CI_Model{
 	 parameter
 	 1. wkt_mulai
 	 2. wkt_selesai
-	 3. hari / tanggal
+	 3. hari 
 	 4. ruangan
 	 */
 
 	function get_ruangan_tersedia($params){
 		$wktmulai=$params['wkt_mulai'];
 		$wktselesai=$params['wkt_selesai'];
-		$tgl=$params['tgl'];
+		$hari=strtoupper($params['hari']);
 		$ruangan=$params['ruangan'];
-		$sql="SELECT * FROM `ar_jadwal` WHERE ((jam_mulai >= '".$wktmulai."' AND jam_mulai <='".$wktselesai."') OR (jam_selesai >= '".$wktmulai."' AND jam_selesai <= '".$wktselesai."')) AND ruangan = '".$ruangan."' AND tanggal = '".$tgl."'";
+		$sql="SELECT * FROM `ar_jadwal` WHERE ((jam_mulai >= '".$wktmulai."' AND jam_mulai <='".$wktselesai."') OR (jam_selesai >= '".$wktmulai."' AND jam_selesai <= '".$wktselesai."')) AND ruangan = '".$ruangan."' AND hari = '".$hari."'";
 		$query=$this->db->query($sql);
 		if($query->num_rows()=='0'){
 			return $ruangan;

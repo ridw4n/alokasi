@@ -132,10 +132,6 @@ $(document).ready(function() {
 			hari:{
 				required:true
 			},
-			tanggal:{
-				required:true,
-				date: true
-			},
 			wkt_mulai:{
 				required:true
 			},
@@ -215,10 +211,6 @@ $(document).ready(function() {
 		rules:{
 			hari:{
 				required:true
-			},
-			tanggal:{
-				required:true,
-				date: true
 			},
 			wkt_mulai:{
 				required:true
@@ -300,10 +292,6 @@ $(document).ready(function() {
 			hari:{
 				required:true
 			},
-			tanggal:{
-				required:true,
-				date: true
-			},
 			wkt_mulai:{
 				required:true
 			},
@@ -381,10 +369,6 @@ $(document).ready(function() {
 			hari:{
 				required:true
 			},
-			tanggal:{
-				required:true,
-				date: true
-			},
 			wkt_mulai:{
 				required:true
 			},
@@ -455,7 +439,7 @@ $(document).ready(function() {
   		}
 	});
 
-	$('#tanggal').datetimepicker({
+	/*$('#tanggal').datetimepicker({
         format: "yyyy-mm-dd",
         language:  'id',
         weekStart: 1,
@@ -465,7 +449,7 @@ $(document).ready(function() {
 		startView: 2,
 		minView: 2,
 		forceParse: 0
-    });
+    });*/
 
     $('.timepicker').datetimepicker({
     	format: "hh:ii:00",

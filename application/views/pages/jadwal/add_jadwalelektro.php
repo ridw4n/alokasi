@@ -17,12 +17,12 @@
 					?>
 				</div>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="control-label col-md-3">Tanggal</label>
 				<div class="col-md-3">
 					<input type="input" name="tanggal" readonly id="tanggal" class="form-control" />
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<label class="control-label col-md-3">Waktu Mulai</label>
 				<div class="col-md-2">
