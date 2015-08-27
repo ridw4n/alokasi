@@ -30,7 +30,7 @@
 					$c=1;
 					foreach ($ruangan as $row) {
 						if($row['kapasitas']<$jadwal['jlh_mhs']){
-							$kapasitas=$row['kapasitas']. " + Kursi Tambahan";
+							$kapasitas=$row['kapasitas']. " + ".($jadwal['jlh_mhs']-$row['kapasitas'])." Kursi Tambahan";
 						}else{
 							$kapasitas=$row['kapasitas'];
 						}
