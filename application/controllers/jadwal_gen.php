@@ -68,7 +68,13 @@ class Jadwal_gen extends CI_Controller{
 				/*echo $row1['kode_mk'].' | '.$row1['jlh_mhs'].' | '.$row1['jam_mulai'].' | '.$row1['jam_selesai'];
 				echo '<hr/>';*/
 			}
-			echo json_encode(array("success"=>true));
+			$jlh=$this->Gen_model->get_mk($data,"returnjlh");
+			if($jlh==0){
+				echo json_encode(array("success"=>true,"msg"=>"Generator Aksi Sukses","takdapat"=>$jlh));
+			}else{
+				echo json_encode(array("success"=>true,"msg"=>"Aksi Sukses, Terdapat $jlh Jadwal yang belum mendapat ruangan","takdapat"=>$jlh));
+			}
+			
 		}
 	}
 

@@ -21,6 +21,7 @@
 					<th style="text-align:center">Jlh Mhs</th>
 					<th style="text-align:center">Dosen Pengajar </th>
 					<th style="text-align:center">Ruangan </th>
+					<th style="text-align:center">Kapasitas Ruangan </th>
 					<th style="text-align:center">Thn Ajaran</th>
 					<?php if($this->auth->is_admin()){ ?>
 					<td style="text-align:center">Aksi</td>

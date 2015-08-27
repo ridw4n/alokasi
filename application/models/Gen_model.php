@@ -37,7 +37,7 @@ class Gen_model extends CI_Model{
 		if($mklab!=null){
 			$this->db->order_by('id_prodi','DESC');
 		}
-		$this->db->order_by('kapasitas','ASC');
+		$this->db->order_by('kapasitas','DESC');
 		$this->db->order_by('nama_ruangan','ASC');
 		$query=$this->db->get('ar_ruangan');
 		if($query->num_rows()>0){

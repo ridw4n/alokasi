@@ -96,7 +96,8 @@ $(document).ready(function() {
 				"sNext":     "Selanjutnya",
 				"sLast":     "Terakhir"
 			}
-        }
+        },
+        "aaSorting": [[0,'desc'],[1,'asc']]
 	});
 
 	$('#jadwalsipil').DataTable({
@@ -122,7 +123,8 @@ $(document).ready(function() {
 				"sNext":     "Selanjutnya",
 				"sLast":     "Terakhir"
 			}
-        }
+        },
+         "aaSorting": [[0,'desc'],[1,'asc']]
 	});
 
 	$("#tambahjadwal_elektro").validate({

@@ -59,9 +59,11 @@ class Jadwal_model extends CI_Model{
 			if($kodesmt!='all'){
 				$this->db->where('ar_jadwal.kodesmt',$kodesmt);
 			}
-			$this->db->select('ar_jadwal.*,ar_matakuliah.nama_mk');
+			$this->db->order_by("ar_jadwal.hari", "desc");
+			$this->db->select('ar_jadwal.*,ar_matakuliah.nama_mk,ar_ruangan.kapasitas');
 			$this->db->from('ar_jadwal');
 			$this->db->join('ar_matakuliah', 'ar_jadwal.kode_mk = ar_matakuliah.kode_mk AND ar_jadwal.kodesmt = ar_matakuliah.kode_smt', 'left');
+			$this->db->join('ar_ruangan', 'ar_jadwal.ruangan = ar_ruangan.nama_ruangan', 'left');
 		}
 		
 		$query = $this->db->get();

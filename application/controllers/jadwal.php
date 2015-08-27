@@ -167,6 +167,13 @@ class Jadwal extends CI_Controller{
 		$datajadwal=array();
 		if($getdata){
 			foreach($getdata as $jdwl){
+				/*$check="";
+				if($jdwl['ruangan']==""){*/
+					$check=' <li role="presentation">
+				      <a role="menuitem" tabindex="-1" href="'.site_url().'jadwal/listruangan/'.$jdwl['id_jadwal'].'"> Lihat List Ruangan
+				      </a>
+				    </li>';
+				//}
 				$aksi='<div class="btn-group">
 				  <a class=" btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
 				    <i class="fa fa-gear"></i> <span class="caret"></span>
@@ -176,6 +183,7 @@ class Jadwal extends CI_Controller{
 				      <a role="menuitem" tabindex="-1" href="'.site_url().'jadwal/edit_jelektro/'.$jdwl['id_jadwal'].'"> Edit
 				      </a>
 				    </li> 
+				    '.$check.'
 				    <li role="presentation">
 				      <a role="menuitem" tabindex="-1" href="#" onClick="hapus_jadwal_e(\''.$jdwl['id_jadwal'].'\')">
 				        Hapus
@@ -194,6 +202,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
+				        $jdwl['kapasitas'],
 				        $jdwl['tahun_ajaran'],
 				        $aksi
 				    );
@@ -208,6 +217,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
+				        $jdwl['kapasitas'],
 				        $jdwl['tahun_ajaran']
 				    );
 				}
@@ -266,6 +276,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
+				        $jdwl['kapasitas'],
 				        $jdwl['tahun_ajaran'],
 				        $aksi
 				    );
@@ -280,6 +291,7 @@ class Jadwal extends CI_Controller{
 				        $jdwl['jlh_mhs'],
 				        $jdwl['dosen_pengajar'],
 				        $jdwl['ruangan'],
+				        $jdwl['kapasitas'],
 				        $jdwl['tahun_ajaran']
 				    );
 				}
@@ -669,5 +681,50 @@ class Jadwal extends CI_Controller{
 		$name = 'format_upload_jadwal.xlsx';
 
 		force_download($name, $data);
+	}
+
+	public function listruangan($id){
+		$this->load->model('Gen_model');
+		if($this->auth->is_login()){
+			$data['title_web']="Daftar Ruangan - Manajemen Alokasi Ruangan";
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
+			$filter=$this->session->userdata('filter_jelektro');
+			$idprodi=$filter['prodi'];
+
+			$jadwal=$this->Jadwal_model->get_jadwal($id,'elektro');
+			$kapasitas=$jadwal['jlh_mhs'];
+			$prioritas=($jadwal['prioritas']=='lab')?$jadwal['prioritas']:"";
+
+			$ruangan=$this->Gen_model->get_ruangan(($kapasitas-10),$idprodi,$prioritas);
+			$x=array();
+			foreach ($ruangan as $row) {
+				$y=array();
+				$y['nama_ruangan']=$row['nama_ruangan'];
+				$y['kapasitas']=$row['kapasitas'];
+				$data['wkt_mulai']=$jadwal['jam_mulai'];
+				$data['wkt_selesai']=$jadwal['jam_selesai'];
+				$data['hari']=$jadwal['hari'];
+				$data['ruangan']=$row['nama_ruangan'];
+				$q3=$this->Gen_model->get_ruangan_tersedia($data);
+				if($q3){
+					$y['terisi']="Bisa Di Isi";
+					array_push($x, $y);
+				}else{
+					$y['terisi']="Penuh";
+				}
+				//array_push($x, $y);
+			}
+			
+			$data['jadwal'] = $jadwal;
+			$data['ruangan'] = $x;
+
+			$data['menu']="menu_kiri";
+			$data['konten']="pages/jadwal/lihatruangan";
+
+			$this->load->view('template',$data);
+		}else{
+			redirect('dashboard/login');
+		}
 	}
 }
