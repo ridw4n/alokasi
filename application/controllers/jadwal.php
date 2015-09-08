@@ -696,7 +696,8 @@ class Jadwal extends CI_Controller{
 			$kapasitas=$jadwal['jlh_mhs'];
 			$prioritas=($jadwal['prioritas']=='lab')?$jadwal['prioritas']:"";
 
-			$ruangan=$this->Gen_model->get_ruangan(($kapasitas-10),$idprodi,$prioritas);
+			//$ruangan=$this->Gen_model->get_ruangan(($kapasitas-10),$idprodi,$prioritas);
+			$ruangan=$this->Gen_model->get_ruangan(1,$idprodi,$prioritas);
 			$x=array();
 			foreach ($ruangan as $row) {
 				$y=array();
@@ -721,6 +722,24 @@ class Jadwal extends CI_Controller{
 
 			$data['menu']="menu_kiri";
 			$data['konten']="pages/jadwal/lihatruangan";
+
+			$this->load->view('template',$data);
+		}else{
+			redirect('dashboard/login');
+		}
+	}
+
+	public function rekaplistjadwal(){
+		$this->load->model('Gen_model');
+		if($this->auth->is_login()){
+			$data['title_web']="Rekapitulasi Jadwal Tanpa Ruangan - Manajemen Alokasi Ruangan";
+			$data['costum_css']=$this->modulcss;
+			$data['costum_js']=$this->moduljs;
+			$filter=$this->session->userdata('filter_jelektro');
+			$data['idprodi']=$filter['prodi'];
+
+			$data['menu']="menu_kiri";
+			$data['konten']="pages/jadwal/rekapjadwal";
 
 			$this->load->view('template',$data);
 		}else{
