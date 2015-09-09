@@ -25,6 +25,9 @@
                 <li>
                     <a href="<?php echo base_url();?>jadwal_gen">Generator</a>
                 </li>
+                 <li>
+                    <a href="<?php echo base_url();?>rekaplistjadwal">Rekap Jadwal Tanpa Ruangan</a>
+                </li>
                 <li>
                     <a href="<?php echo base_url();?>jadwal/upload_jadwal">Upload Jadwal</a>
                 </li>

@@ -92,7 +92,7 @@ class Jadwal_gen extends CI_Controller{
 			echo json_encode(array(
 				"success"=>true,
 				"jlh"=>$jlh,
-				"msg"=>"Terdapat ".$jlh." Jadwal Yang Belum Mendapatkan Ruangan."));
+				"msg"=>"Terdapat ".$jlh." Jadwal Yang Belum Mendapatkan Ruangan. Lihat di <a href=\"".base_url()."rekaplistjadwal\">Sini</a>"));
 		}
 	}
 }
